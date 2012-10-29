@@ -23,8 +23,16 @@ class MapViewer
             height: 72
         @tiles[tile.index].appendTo @grid
 
-    
+    highlight_path: (path) ->
+        if path == false
+            return
+
+        for index in path
+            @tiles[index].css
+                border: "1px solid red"
 
 $ ->
     generator = new MapGenerator
-    new MapViewer "#grid", generator.get_grass_map 50, 40 
+    viewer = new MapViewer "#grid", generator.get_grass_map 20, 20
+    finder = new PathFinder 20, 20
+    viewer.highlight_path finder.get_path 0, 317, 1000, -> 1
