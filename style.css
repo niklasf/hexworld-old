@@ -22,6 +22,12 @@ body {
   overflow: hidden;
 }
 
+.tile {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+}
+
 .tile img {
   position: absolute;
 }
