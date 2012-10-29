@@ -4,19 +4,36 @@ class Map
     constructor: (@rows, @cols) ->
         @nodes = ({
             index: i
-            x: @get_x(i)
-            y: @get_y(i)
+            row: @get_row(i)
+            col: @get_col(i)
             type: 'gras'
             random: Math.random()
         } for i in [0...@rows * @cols])
 
-    get_x: (index) ->
+    get_col: (index) ->
         index % @cols
 
-    get_y: (index) ->
-        return Math.floor(index / @cols)
+    get_row: (index) ->
+        Math.floor(index / @cols)
 
-    find_path: (from_index, to_index, cost_function) ->
+###
+    get_neighbors: (index) ->
+        neighbors = []
+
+        # North.
+        if @get_row(index) > 0
+            neighbors.push index - @cols
+        # South.
+        if @get_row(index) < @rows - 1
+            neighbors.push index + @cols
+
+        if @get_col(index) % 2 == 0
+            # South-west.
+            if @get_y
+        # North-west.
+        if 
+
+    get_path: (from_index, to_index, cost_function) ->
         cache = ({
             closed: false
             g: 0
@@ -58,6 +75,7 @@ class Map
             cache[current_node].closed = true
 
         return false
+###
 
 if module?.exports
     module.exports = Map
