@@ -66,6 +66,9 @@ class Map
         open_list = new Heap (a, b) ->
             return cache[a].f - cache[b].f
 
+        h = (i, j) =>
+            Math.abs(@get_row(i) - @get_row(j)) + Math.abs(@get_col(i) - @get_col(j)) - 1
+
         expand_node = (current_node) =>
             for neighbor in @get_neighbors current_node
                 if cache[neighbor].closed
@@ -76,21 +79,21 @@ class Map
                 if tentative_g >= cache[neighbor].g and open_list.contains neighbor
                     continue
 
-                neighbor.previous_node = current_node
+                cache[neighbor].previous_node = current_node
                 cache[neighbor].g = tentative_g
                 cache[neighbor].f = tentative_g + h(neighbor)
 
                 if open_list.contains neighbor
-                    open_list.changeItem neighbor
+                    open_list.updateItem neighbor
                 else
                     open_list.push neighbor
 
-        open_list.push(current_node)
+        open_list.push(to_index)
 
         while not open_list.empty()
             current_node = open_list.pop()
-            if to_index == current_node
-                way = [to_index]
+            if from_index == current_node
+                way = [cache[from_index].previous_node]
                 way.push cache[way[-1..][0]].previous_node while cache[way[-1..][0]].previous_node
                 return way
             expand_node current_node

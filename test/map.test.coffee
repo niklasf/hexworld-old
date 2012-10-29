@@ -39,6 +39,10 @@ describe 'Map#get_neighbors', ->
         assert.equal 4, map.get_neighbors(7).length
 
 describe 'Map#get_path', ->
-    it 'should get the path from an index to an index', ->
-        map = new Map 5, 10
-        assert.equal [0, 1, 2, 3], map.get_path 0, 3, -> 1
+    it 'should get the direct path from an index to an index', ->
+        map = new Map 3, 4
+        path = map.get_path 0, 3, -> 1
+        assert.equal 1, path[0]
+        assert.equal 2, path[1]
+        assert.equal 3, path[2]
+        assert.equal 3, path.length
