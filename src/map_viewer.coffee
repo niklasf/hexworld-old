@@ -16,6 +16,7 @@ class MapViewer
             width: 72
             height: 72
         @unit.appendTo @grid
+        @unit_pos = 0
 
     create_tile: (tile) ->
         html = '<div class="tile">'
@@ -32,6 +33,13 @@ class MapViewer
             height: 72
         @tiles[tile.index].appendTo @grid
 
+        @tiles[tile.index].click =>
+            finder = new PathFinder 20, 20
+            path = finder.get_path @unit_pos, tile.index, 20000000, (i) =>
+                if @map.nodes[i].type == "grass" then 1 else 1000
+            @animate_path path, @unit
+            @unit_pos = tile.index
+
     highlight_path: (path) ->
         if path == false
             return
@@ -47,13 +55,10 @@ class MapViewer
             unit.animate
                 left: 54 * col
                 top: 72 * row + (if col % 2 == 0 then 0 else 36),
-                500,
+                200,
                 'linear',
                 => @animate_path(path[1..], unit)
 
 $ ->
     generator = new MapGenerator
-    viewer = new MapViewer "#grid", generator.get_grass_map 20, 20
-    finder = new PathFinder 20, 20
-    viewer.highlight_path finder.get_path 0, 317, 1000, -> 1
-    viewer.animate_path (finder.get_path 0, 317, 1000, -> 1), viewer.unit
+    new MapViewer "#grid", generator.get_random_map 20, 20
