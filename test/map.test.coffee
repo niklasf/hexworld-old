@@ -55,3 +55,9 @@ describe 'Map#get_path', ->
         assert.equal 5, path[1]
         assert.equal 8, path[2]
         assert.equal 3, path.length
+
+    it 'should respect unpassable nodes', ->
+        map = new Map 3, 4
+        path = map.get_path 0, 11, (index) ->
+            if index in [4, 1] then 0 else 1
+        assert.ok false == path

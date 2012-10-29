@@ -56,6 +56,9 @@ class Map
         return neighbors
 
     get_path: (from_index, to_index, cost_function) ->
+        if from_index == to_index
+            return []
+
         cache = ({
             closed: false
             g: 0
@@ -74,7 +77,10 @@ class Map
                 if cache[neighbor].closed
                     continue
 
-                tentative_g = cache[current_node].g + cost_function(neighbor)
+                cost = cost_function(neighbor)
+                if cost < 1
+                    continue
+                tentative_g = cache[current_node].g + cost
 
                 if tentative_g >= cache[neighbor].g and open_list.contains neighbor
                     continue
