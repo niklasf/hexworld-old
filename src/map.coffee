@@ -16,7 +16,6 @@ class Map
     get_row: (index) ->
         Math.floor(index / @cols)
 
-###
     get_neighbors: (index) ->
         neighbors = []
 
@@ -28,10 +27,33 @@ class Map
             neighbors.push index + @cols
 
         if @get_col(index) % 2 == 0
-            # South-west.
-            if @get_y
-        # North-west.
-        if 
+            if @get_col(index) > 0
+                # South-west.
+                neighbors.push index - 1
+                # North-west.
+                if @get_row(index) > 0
+                    neighbors.push index - 1 - @cols
+            if @get_col(index) < @cols - 1
+                # South-east.
+                neighbors.push index + 1
+                # North-east.
+                if @get_row(index) > 0
+                    neighbors.push index + 1 - @cols
+        else
+            if @get_col(index) > 0
+                # North-west.
+                neighbors.push index - 1
+                # South-west.
+                if @get_row(index) < @rows - 1
+                    neighbors.push index - 1 + @cols
+            if @get_col(index) < @cols - 1
+                # North-east.
+                neighbors.push index + 1
+                # South-east.
+                if @get_row(index) < @rows - 1
+                    neighbors.push index + 1 + @cols
+
+        return neighbors
 
     get_path: (from_index, to_index, cost_function) ->
         cache = ({
@@ -44,7 +66,7 @@ class Map
         open_list = new Heap (a, b) ->
             return cache[a].f - cache[b].f
 
-        expand_node = (current_node) ->
+        expand_node = (current_node) =>
             for neighbor in @get_neighbors current_node
                 if cache[neighbor].closed
                     continue
@@ -75,7 +97,6 @@ class Map
             cache[current_node].closed = true
 
         return false
-###
 
 if module?.exports
     module.exports = Map
