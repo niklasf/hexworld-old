@@ -6,7 +6,7 @@ class MapViewer
             @create_tile node
 
         @grid.draggable
-            containment: [-54 * @map.cols + 360, -72 * @map.rows + 360, 360, 360]
+            containment: [-54 * @map.cols + 360, -72 * @map.rows + 360, 180, 180]
 
     create_tile: (tile) ->
         html = '<div class="tile">'
