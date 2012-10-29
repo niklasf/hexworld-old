@@ -59,4 +59,7 @@ class Map
 
         return false
 
-console.log (new Map(10, 10)).find_path(0, 1)
+if module?.exports
+    module.exports = Map
+else
+    window.Map = Map
