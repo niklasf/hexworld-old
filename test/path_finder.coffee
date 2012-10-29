@@ -61,3 +61,8 @@ describe 'PathFinder#get_path', ->
         path = path_finder.get_path 0, 11, 100, (index) ->
             if index in [4, 1] then false else 1
         assert.ok false == path
+
+    it 'should respect maximum costs', ->
+        path_finder = new PathFinder 3, 4
+        path = path_finder.get_path 0, 11, 3, -> 1
+        assert.ok false == path
