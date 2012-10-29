@@ -46,3 +46,12 @@ describe 'Map#get_path', ->
         assert.equal 2, path[1]
         assert.equal 3, path[2]
         assert.equal 3, path.length
+
+    it 'should go around expensive nodes', ->
+        map = new Map 3, 4
+        path = map.get_path 0, 8, (index) ->
+            if index is 4 then 10 else 1
+        assert.equal 1, path[0]
+        assert.equal 5, path[1]
+        assert.equal 8, path[2]
+        assert.equal 3, path.length

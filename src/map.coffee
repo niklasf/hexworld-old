@@ -66,15 +66,15 @@ class Map
         open_list = new Heap (a, b) ->
             return cache[a].f - cache[b].f
 
-        h = (i, j) =>
-            Math.abs(@get_row(i) - @get_row(j)) + Math.abs(@get_col(i) - @get_col(j)) - 1
+        h = (i) =>
+            Math.abs(@get_row(i) - @get_row(from_index)) + Math.abs(@get_col(i) - @get_col(from_index)) - 1
 
         expand_node = (current_node) =>
             for neighbor in @get_neighbors current_node
                 if cache[neighbor].closed
                     continue
 
-                tentative_g = cache[current_node].g + cost_function(current_node, neighbor)
+                tentative_g = cache[current_node].g + cost_function(neighbor)
 
                 if tentative_g >= cache[neighbor].g and open_list.contains neighbor
                     continue
