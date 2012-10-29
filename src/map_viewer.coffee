@@ -7,6 +7,10 @@ class MapViewer
 
         @grid.draggable
             containment: [-54 * @map.cols + 360, -72 * @map.rows + 360, 180, 180]
+            distance: 20
+            start: =>
+                @dragging = true
+                return true
 
         @unit = $ '<div class="unit"><img src="images/mage.png"></div>'
         @unit.css
@@ -34,6 +38,9 @@ class MapViewer
         @tiles[tile.index].appendTo @grid
 
         @tiles[tile.index].click =>
+            if @dragging
+                @dragging = false
+                return true
             finder = new PathFinder 20, 20
             path = finder.get_path @unit_pos, tile.index, 20000000, (i) =>
                 if @map.nodes[i].type == "grass" then 1 else 1000
