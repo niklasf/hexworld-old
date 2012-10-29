@@ -1,6 +1,6 @@
-lib/map.js: src/map.coffee
-	@coffee -c -o lib src/map.coffee
+lib: src/path_finder.coffee
+	@coffee -c -o lib src/path_finder.coffee
 
 .PHONY: test
-test: lib/map.js
+test: lib
 	@mocha --compilers coffee:coffee-script test/*.coffee

@@ -1,14 +1,7 @@
 Heap = (require? "heap") or window.Heap
 
-class Map
+class PathFinder
     constructor: (@rows, @cols) ->
-        @nodes = ({
-            index: i
-            row: @get_row(i)
-            col: @get_col(i)
-            type: 'gras'
-            random: Math.random()
-        } for i in [0...@rows * @cols])
 
     get_col: (index) ->
         index % @cols
@@ -55,7 +48,7 @@ class Map
 
         return neighbors
 
-    get_path: (from_index, to_index, cost_function) ->
+    get_path: (from_index, to_index, max_cost, cost_function) ->
         if from_index == to_index
             return []
 
@@ -78,9 +71,17 @@ class Map
                     continue
 
                 cost = cost_function(neighbor)
-                if cost < 1
+
+                # Can't walk onto the square.
+                if cost == false
                     continue
+                # Can walk onto the square, but not leave.
+                if cost == true and from_index != neighbor
+                    continue
+
                 tentative_g = cache[current_node].g + cost
+                if tentative_g > max_cost
+                    continue
 
                 if tentative_g >= cache[neighbor].g and open_list.contains neighbor
                     continue
@@ -99,6 +100,7 @@ class Map
         while not open_list.empty()
             current_node = open_list.pop()
             if from_index == current_node
+                # Join the way into an array.
                 way = [cache[from_index].previous_node]
                 way.push cache[way[-1..][0]].previous_node while cache[way[-1..][0]].previous_node
                 return way
@@ -108,6 +110,6 @@ class Map
         return false
 
 if module?.exports
-    module.exports = Map
+    module.exports = PathFinder
 else
-    window.Map = Map
+    window.PathFinder = PathFinder
