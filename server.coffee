@@ -31,7 +31,7 @@ db.open (err, db) ->
                 return
 
     app.param 'game', (req, res, next, game_id) ->
-        console.log "Loading game of id #{ req.params.game}."
+        # Loads a game parameter from a URL to populate req.game.
         if not game_id.match /^[a-f0-9]{24}$/
             next('route')
         else
@@ -50,7 +50,12 @@ db.open (err, db) ->
     app.get '/:game/', (req, res) ->
         res.sendfile 'index.html'
 
-    app.get '/:game/:token', (req, res) ->
+    app.get '/:game/:player', (req, res, next) ->
+        console.log req.params.player
+        console.log req.game
+        player = req.game.players.indexOf req.params.player
+        return next('route') if player is -1
+
         res.sendfile 'index.html'
 
     app.get '/style.css', (req, res) ->
