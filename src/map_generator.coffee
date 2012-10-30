@@ -8,7 +8,7 @@ class MapGenerator
             row: Math.floor(i / cols)
             type: "grass"
             images:
-                0: "images/green.png"
+                0: "/images/green.png"
         } for i in [0...cols * rows])
 
     get_random_map: (rows, cols) ->
@@ -16,7 +16,7 @@ class MapGenerator
         for node in map.nodes
             if Math.random() > 0.6
                 node.type = "water"
-                node.images[0] = "images/coast.png"
+                node.images[0] = "/images/coast.png"
         return map
 
 if module?.exports

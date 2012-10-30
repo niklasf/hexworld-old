@@ -8,7 +8,7 @@ body {
 
 #top {
   height: 26px;
-  background-image: url(images/top-bg.png);
+  background-image: url(/images/top-bg.png);
   background-repeat: repeat-x;
   padding: 2px;
 }

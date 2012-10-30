@@ -12,7 +12,7 @@ class MapViewer
                 @dragging = true
                 return true
 
-        @unit = $ '<div class="unit"><img src="images/mage.png"></div>'
+        @unit = $ '<div class="unit"><img src="/images/mage.png"></div>'
         @unit.css
             position: "absolute"
             left: 0
