@@ -66,6 +66,7 @@ class MapViewer
                 'linear',
                 => @animate_path(path[1..], unit)
 
-$ ->
-    generator = new MapGenerator
-    new MapViewer "#grid", generator.get_random_map 20, 20
+if module?.exports
+    module.exports = MapViewer
+else
+    window.MapViewer = MapViewer

@@ -1,6 +1,7 @@
 express = require 'express'
 http = require 'http'
 mongo = require 'mongodb'
+MapGenerator = require './lib/map_generator'
 
 db_server = new mongo.Server 'localhost', 27017,
     auto_reconnect: true
@@ -57,6 +58,22 @@ db.open (err, db) ->
         return next('route') if player is -1
 
         res.sendfile 'index.html'
+
+    app.get '/generate_map', (req, res, next) ->
+        db.collection 'games', (err, games) ->
+             games.findOne (err, game) ->
+                 generator = new MapGenerator
+                 game.map = generator.get_grass_map 10, 20
+                 games.save game
+
+    app.get '/:game/all.json', (req, res, next) ->
+        res.json req.game.map
+
+    """app.get '/:game/delta.json', (req, res, next) ->
+        db.collection 'events', (err, events) ->
+            events.find
+                "game": req.game._id
+                "id"""
 
     app.get '/style.css', (req, res) ->
         res.sendfile 'style.css'
