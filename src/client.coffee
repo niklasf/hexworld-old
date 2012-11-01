@@ -5,4 +5,4 @@ $ ->
     game_id = parts[3]
 
     $.getJSON '/' + game_id + '/all.json', (data, status) ->
-        new MapViewer '#grid', data
+        new MapViewer data, '#grid'

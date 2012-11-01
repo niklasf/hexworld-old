@@ -2,6 +2,7 @@
   "dependencies": {
     "heap": "~0.2.1",
     "express": "~3.0.0",
-    "mongodb": "~1.1.11"
+    "mongodb": "~1.1.11",
+    "eventemitter2": "~0.4.10"
   },
 }
