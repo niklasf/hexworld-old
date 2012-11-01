@@ -27,6 +27,8 @@ class MapViewer extends MapViewerBase
         @grid.mousemove (e) =>
             index = @index_from_coordinates e.clientX, e.clientY, @grid.offset()
             @emit "hover_tile", index
+        @grid.mouseleave (e) =>
+            @emit "hover_tile", -1
 
     create_tile: (tile) ->
         html = '<div class="tile">'
@@ -37,6 +39,15 @@ class MapViewer extends MapViewerBase
         @tiles[tile.index] = $ html
         @tiles[tile.index].css @coordinates_from_index tile.index
         @tiles[tile.index].appendTo @grid
+
+    set_hover_hex: (index) ->
+        if index == -1
+            @hover_top.hide()
+            @hover_bottom.hide()
+        else
+            coords = @coordinates_from_index index
+            @hover_top.css(coords).show()
+            @hover_bottom.css(coords).show()
 
 if module?.exports
     module.exports = MapViewer

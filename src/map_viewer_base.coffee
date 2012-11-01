@@ -16,10 +16,17 @@ class MapViewerBase extends EventEmitter2
 
         radius = Math.sqrt(18 * 18 + 36 * 36)
         if cx > Math.abs(radius / 2 - radius * cy / 72)
-            return cj * @map.cols + ci
+            row  = cj
+            col = ci
         else
             row = cj + (ci % 2) - (if cy < 36 then 1 else 0)
             col = ci - 1
+
+        if col < 0 or col >= @map.cols
+            return -1
+        else if row < 0 or row >= @map.rows
+            return -1
+        else
             return row * @map.cols + col
 
     row_and_col_from_index: (index) ->
