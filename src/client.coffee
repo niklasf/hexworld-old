@@ -5,4 +5,6 @@ $ ->
     game_id = parts[3]
 
     $.getJSON '/' + game_id + '/all.json', (data, status) ->
-        new MapViewer data, '#grid'
+        viewer = new MapViewer data, '#grid'
+        viewer.on 'hover_tile', (index) ->
+            console.log index

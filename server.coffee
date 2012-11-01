@@ -20,6 +20,7 @@ db.open (err, db) ->
         app.use '/lib', express.static __dirname + '/lib'
         app.use '/vendor', express.static __dirname + '/vendor'
         app.use '/node_modules/heap/lib/', express.static __dirname + '/node_modules/heap/lib'
+        app.use '/node_modules/eventemitter2/lib/', express.static __dirname + '/node_modules/eventemitter2/lib'
         app.use express.logger 'dev'
 
     app.get '/', (req, res) ->

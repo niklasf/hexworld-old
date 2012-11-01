@@ -1,4 +1,6 @@
-class MapViewerBase
+EventEmitter2 = ((require? "eventemitter2") or window).EventEmitter2
+
+class MapViewerBase extends EventEmitter2
     constructor: (@map) ->
 
     index_from_coordinates: (left, top, offset = { left: 0, top: 0 }) ->

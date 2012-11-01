@@ -26,8 +26,7 @@ class MapViewer extends MapViewerBase
 
         @grid.mousemove (e) =>
             index = @index_from_coordinates e.clientX, e.clientY, @grid.offset()
-            @hover_top.css @coordinates_from_index index
-            @hover_bottom.css @coordinates_from_index index
+            @emit "hover_tile", index
 
     create_tile: (tile) ->
         html = '<div class="tile">'
