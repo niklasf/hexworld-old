@@ -24,11 +24,22 @@ class MapViewer extends MapViewerBase
         @hover_bottom = $ '<div class="tile"><img src="/images/hover-hex-bottom.png"></div>'
         @hover_bottom.appendTo @grid
 
+        @hover_index = -1
+
         @grid.mousemove (e) =>
             index = @index_from_coordinates e.clientX, e.clientY, @grid.offset()
-            @emit "hover_tile", index
+            if index != @hover_index
+                @hover_index = index
+                @emit "hover", index
+
         @grid.mouseleave (e) =>
-            @emit "hover_tile", -1
+            if @hover_index != -1
+                @hover_index = -1
+                @emit "hover", -1
+
+        @grid.click (e) =>
+            index = @index_from_coordinates e.clientX, e.clientY, @grid.offset()
+            @emit "click", index if index != -1
 
     create_tile: (tile) ->
         html = '<div class="tile">'

@@ -6,5 +6,7 @@ $ ->
 
     $.getJSON '/' + game_id + '/all.json', (data, status) ->
         viewer = new MapViewer data, '#grid'
-        viewer.on 'hover_tile', (index) ->
+        viewer.on 'hover', (index) ->
             viewer.set_hover_hex index
+        viewer.on 'click', (index) ->
+            alert index
