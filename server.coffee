@@ -63,7 +63,7 @@ db.open (err, db) ->
         db.collection 'games', (err, games) ->
              games.findOne (err, game) ->
                  generator = new MapGenerator
-                 game.map = generator.get_grass_map 10, 20
+                 game.map = generator.get_random_map 10, 20
                  games.save game
 
     app.get '/:game/all.json', (req, res, next) ->

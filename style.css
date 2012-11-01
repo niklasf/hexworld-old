@@ -26,6 +26,9 @@ body {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
+  position: absolute;
+  width: 72px;
+  height: 72px;
 }
 
 .tile img {
