@@ -102,7 +102,7 @@ class PathFinder
             if from_index == current_node
                 # Join the way into an array.
                 way = [cache[from_index].previous_node]
-                way.push cache[way[-1..][0]].previous_node while cache[way[-1..][0]].previous_node
+                way.push cache[way[-1..][0]].previous_node while cache[way[-1..][0]].previous_node != null
                 return way
             expand_node current_node
             cache[current_node].closed = true

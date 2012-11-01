@@ -9,12 +9,12 @@ $ ->
         viewer = new MapViewer data, '#grid'
 
         viewer.on 'hover', (index) ->
-            viewer.set_hover_hex 67
+            viewer.set_hover_hex index
 
             if index != -1
                 finder = new PathFinder 10, 20
                 path = finder.get_path 67, index, 30, -> 1
-                viewer.set_highlighted_path path
+                viewer.set_highlighted_path 67, path
 
         viewer.on 'click', (index) ->
             alert index

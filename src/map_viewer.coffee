@@ -85,18 +85,20 @@ class MapViewer extends MapViewerBase
             else if to == from - @map.cols - 1
                 return ["foot-normal-in-se.png", "foot-normal-out-se.png"]
 
-    set_highlighted_path: (path) ->
+    set_highlighted_path: (start_index, path) ->
         @grid.children('.path').remove()
-        for i in [0...path.length]
-            if i >= path.length - 1 then continue
-            [one, two] = @get_footsteps path[i], path[i + 1]
 
-            if not one then continue
+        if not path then return
+
+        path = path[..]
+        path.unshift start_index
+
+        for i in [0...path.length - 1]
+            [one, two] = @get_footsteps path[i], path[i + 1]
 
             tile = $ '<div class="tile path"><img src="/images/footsteps/' + one + '"></div>'
             tile.css @coordinates_from_index path[i]
             tile.appendTo @grid
-
 
             tile = $ '<div class="tile path"><img src="/images/footsteps/' + two + '"></div>'
             tile.css @coordinates_from_index path[i + 1]
