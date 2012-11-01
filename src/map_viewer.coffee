@@ -60,6 +60,48 @@ class MapViewer extends MapViewerBase
             @hover_top.css(coords).show()
             @hover_bottom.css(coords).show()
 
+    get_footsteps: (from, to) ->
+        console.log from + "<-->" + to
+        if to == from + @map.cols
+            return ["foot-normal-in-n.png", "foot-normal-out-n.png"]
+        else if to == from - @map.cols
+            return ["foot-normal-out-n.png", "foot-normal-in-n.png"]
+        if to % 2 == 0
+            if to == from + 1
+                return ["foot-normal-out-ne.png", "foot-normal-in-ne.png"]
+            else if to == from - 1
+                return ["foot-normal-in-se.png", "foot-normal-out-se.png"]
+            else if to == from + @map.cols + 1
+                return ["foot-normal-out-se.png", "foot-normal-in-se.png"]
+            else if to == from + @map.cols - 1
+                return ["foot-normal-in-ne.png", "foot-normal-out-ne.png"]
+        else
+            if to == from + 1
+                return ["foot-normal-out-se.png", "foot-normal-in-se.png"]
+            else if to == from - 1
+                return ["foot-normal-in-ne.png", "foot-normal-out-ne.png"]
+            else if to == from - @map.cols + 1
+                return ["foot-normal-out-ne.png", "foot-normal-in-ne.png"]
+            else if to == from - @map.cols - 1
+                return ["foot-normal-in-se.png", "foot-normal-out-se.png"]
+
+    set_highlighted_path: (path) ->
+        @grid.children('.path').remove()
+        for i in [0...path.length]
+            if i >= path.length - 1 then continue
+            [one, two] = @get_footsteps path[i], path[i + 1]
+
+            if not one then continue
+
+            tile = $ '<div class="tile path"><img src="/images/footsteps/' + one + '"></div>'
+            tile.css @coordinates_from_index path[i]
+            tile.appendTo @grid
+
+
+            tile = $ '<div class="tile path"><img src="/images/footsteps/' + two + '"></div>'
+            tile.css @coordinates_from_index path[i + 1]
+            tile.appendTo @grid
+
 if module?.exports
     module.exports = MapViewer
 else
